@@ -96,6 +96,7 @@ jobs:
           apt download waydroid python3-gbinder libgbinder libglibutil
           dpkg -x waydroid_*.deb waydroid
           dpkg -e waydroid_*.deb waydroid/DEBIAN
+          mkdir -p /tmp/waydroid/var/lib/waydroid/
           tree waydroid
           bash -c "echo -e '\npersist.sys.timezone=Asia/Shanghai\npersist.sys.language=zh\npersist.sys.country=CN' >> /tmp/waydroid/var/lib/waydroid/waydroid.cfg"
           bash -c "echo -e '\nro.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.product.cpu.abilist64=x86_64,arm64-v8a\nro.dalvik.vm.native.bridge=libhoudini.so\nro.enable.native.bridge.exec=1\nro.dalvik.vm.isa.arm=x86\nro.dalvik.vm.isa.arm64=x86_64\nro.vendor.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist64=x86_64,arm64-v8a'  >> /tmp/waydroid/var/lib/waydroid/waydroid.cfg"
