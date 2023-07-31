@@ -24,8 +24,8 @@ jobs:
           
           urlSystem=https://sourceforge.net/projects/waydroid/files/images/system/lineage/waydroid_x86_64/lineage-18.1-20230729-GAPPS-waydroid_x86_64-system.zip/download
           urlVendor=https://sourceforge.net/projects/waydroid/files/images/vendor/waydroid_x86_64/lineage-18.1-20230729-MAINLINE-waydroid_x86_64-vendor.zip/download
-          aria2c -x 16 -s 16 urlSystem
-          aria2c -x 16 -s 16 urlVendor
+          aria2c -x 16 -s 16 $urlSystem
+          aria2c -x 16 -s 16 $urlVendor
           uSystem=`dirname $urlSystem`
           uVendor=`dirname $urlVendor`
           unzip `basename $uSystem`
