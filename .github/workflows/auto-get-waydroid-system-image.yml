@@ -10,11 +10,18 @@ jobs:
     steps:
       - name: Get
         run: |
-          VERSION=1.0.0-`date +"%Y%m%d%H%M%S%N"`
           # 配置环境
           echo 配置环境
           sudo apt update
-          sudo apt install aria2 curl qemu-utils qemu-system gparted -y
+          sudo apt install aria2 curl qemu-utils qemu-system gparted git python3 python3-requests -y
+          git clone https://github.com/gfdgd-xi/waydroid-deb-build
+          cd waydroid-deb-build
+          python3 get-newest-version.py
+          cp ../waydroid-deb-build /tmp -rv
+          VERSION=`cat /tmp/version.txt`-`date +"%Y%m%d%H%M%S"`
+          curl https://repo.waydro.id | sudo bash | true
+          sudo bash -c "echo deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo.waydro.id/ bullseye main > /etc/apt/sources.list.d/waydroid.list"
+          sudo apt update
           echo 下载所需安装包
           cd /tmp
           aria2c -x 16 -s 16 https://jihulab.com/gfdgd-xi/waydroid-image/-/raw/main/houdini-install.tar.gz
@@ -23,8 +30,8 @@ jobs:
           #sudo apt install waydroid -y
           #sudo waydroid init -s GAPPS -f
           
-          urlSystem=https://sourceforge.net/projects/waydroid/files/images/system/lineage/waydroid_x86_64/lineage-18.1-20230729-GAPPS-waydroid_x86_64-system.zip/download
-          urlVendor=https://sourceforge.net/projects/waydroid/files/images/vendor/waydroid_x86_64/lineage-18.1-20230729-MAINLINE-waydroid_x86_64-vendor.zip/download
+          urlSystem=`cat /tmp/url.txt`
+          urlVendor=`cat /tmp/vendorurl.txt`
           aria2c -x 16 -s 16 $urlSystem
           aria2c -x 16 -s 16 $urlVendor
           uSystem=`dirname $urlSystem`
@@ -86,23 +93,37 @@ jobs:
           chmod 0775 -Rv deb/DEBIAN
           dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
           #mv waydroid-android-image-gapps.deb /tmp
+          apt download waydroid python3-gbinder libgbinder libglibutil
+          dpkg -x waydroid_*.deb waydroid
+          dpkg -e waydroid_*.deb waydroid/DEBIAN
+          bash -c "echo -e '\npersist.sys.timezone=Asia/Shanghai\npersist.sys.language=zh\npersist.sys.country=CN' >> waydroid/var/lib/waydroid/waydroid.cfg"
+          bash -c "echo -e '\nro.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.product.cpu.abilist64=x86_64,arm64-v8a\nro.dalvik.vm.native.bridge=libhoudini.so\nro.enable.native.bridge.exec=1\nro.dalvik.vm.isa.arm=x86\nro.dalvik.vm.isa.arm64=x86_64\nro.vendor.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist64=x86_64,arm64-v8a'  >> waydroid/var/lib/waydroid/waydroid.cfg"
+          rm waydroid/DEBIAN/md5sums -rfv
+          python3 waydroid-deb-build/change-deb-debian.py waydroid/DEBIAN/control
+          dpkg-deb -Z xz -z 4 -b waydroid waydroid.deb
+
           
       - name: upload result(system.img)
         uses: actions/upload-artifact@v1
         with:
           name: system.img
           path: /tmp/system.img
-      
+      - name: upload result(vendor.img)
+        uses: actions/upload-artifact@v1
+        with:
+          name: vendor.img
+          path: /usr/share/waydroid-extra/images/vendor.img
       - name: upload result(waydroid-android-image-gapps.deb)
         uses: actions/upload-artifact@v1
         with:
           name: waydroid-android-image-gapps.deb
           path: /tmp/waydroid-android-image-gapps.deb
-      #- name: upload result(vendor.img)
-       # uses: actions/upload-artifact@v1
-       # with:
-        #  name: vendor.img
-         # path: /usr/share/waydroid-extra/images/vendor.img
+      - name: upload result(waydroid.deb)
+        uses: actions/upload-artifact@v1
+        with:
+          name: waydroid.deb
+          path: /tmp/waydroid.deb
+
   
 
       
