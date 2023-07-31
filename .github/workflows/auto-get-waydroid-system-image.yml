@@ -22,10 +22,14 @@ jobs:
           #sudo apt install waydroid -y
           #sudo waydroid init -s GAPPS -f
           
-          url=https://sourceforge.net/projects/waydroid/files/images/system/lineage/waydroid_x86_64/lineage-18.1-20230422-GAPPS-waydroid_x86_64-system.zip/download
-          aria2c -x 16 -s 16 $url
-          u=`dirname $url`
-          unzip `basename $u`
+          urlSystem=https://sourceforge.net/projects/waydroid/files/images/system/lineage/waydroid_x86_64/lineage-18.1-20230729-GAPPS-waydroid_x86_64-system.zip/download
+          urlVendor=https://sourceforge.net/projects/waydroid/files/images/vendor/waydroid_x86_64/lineage-18.1-20230729-MAINLINE-waydroid_x86_64-vendor.zip/download
+          aria2c -x 16 -s 16 urlSystem
+          aria2c -x 16 -s 16 urlVendor
+          uSystem=`dirname $urlSystem`
+          uVendor=`dirname $urlVendor`
+          unzip `basename $uSystem`
+          unzip `basename $uVendor`
           # 扩容 img
           qemu-img resize system.img +1G
           sudo modprobe nbd max_ports=8 
@@ -50,6 +54,7 @@ jobs:
           mkdir -p deb/DEBIAN
           mkdir -p deb/usr/share/waydroid-extra
           cp system.img deb/usr/share/waydroid-extra
+          cp vendor.img deb/usr/share/waydroid-extra
           cat > deb/DEBIAN/control <<EOF
           Package: waydroid-android-image-gapps
           Version: 1.0.0
@@ -67,7 +72,7 @@ jobs:
           Description: Waydroid Android 镜像
           EOF
           dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
-          mv waydroid-android-image-gapps.deb /tmp
+          #mv waydroid-android-image-gapps.deb /tmp
           
       - name: upload result(system.img)
         uses: actions/upload-artifact@v1
