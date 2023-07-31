@@ -2,7 +2,7 @@ name: Auto Get Waydroid Image
 run-name: ${{ github.actor }} Auto Get Waydroid Image 🚀
 on:
 #  schedule:
-#    - cron: '0 0 * * *'
+  push:
   workflow_dispatch:
 jobs:
   Explore-GitHub-Actions:
