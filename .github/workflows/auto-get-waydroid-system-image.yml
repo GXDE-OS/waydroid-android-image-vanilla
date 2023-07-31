@@ -73,6 +73,16 @@ jobs:
           Installed-Size: 0
           Description: Waydroid Android 镜像
           EOF
+          cat > deb/DEBIAN/postinst <<EOF
+          Package: waydroid-android-image-gapps
+          #!/bin/bash
+          systemctl restart waydroid-container.service | true
+          EOF
+          cat > deb/DEBIAN/postrm <<EOF
+          Package: waydroid-android-image-gapps
+          #!/bin/bash
+          systemctl restart waydroid-container.service | true
+          EOF
           dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
           #mv waydroid-android-image-gapps.deb /tmp
           
