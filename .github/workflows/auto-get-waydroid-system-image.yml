@@ -44,10 +44,10 @@ jobs:
           sudo mkdir -p /tmp/mount/etc/init | true
           sudo mkdir -p /tmp/mount/lib | true
           sudo mkdir -p /tmp/mount/lib64 | true
-          sudo cp /tmp/houdini-install/overlay/system/bin /tmp/mount/system -rv | true
-          sudo cp /tmp/houdini-install/overlay/system/etc /tmp/mount/system -rv | true
-          sudo cp /tmp/houdini-install/overlay/system/lib /tmp/mount/ -rv | true
-          sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
+          sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/system -rv | true
+          #sudo cp /tmp/houdini-install/overlay/system/etc /tmp/mount/system -rv | true
+          sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/ -rv | true
+          #sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
           
           sudo umount /tmp/mount | true
           sudo qemu-nbd -d /dev/nbd0 | true
