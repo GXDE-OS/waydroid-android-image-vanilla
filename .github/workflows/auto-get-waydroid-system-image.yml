@@ -1,0 +1,91 @@
+name: Auto Get Waydroid Image
+run-name: ${{ github.actor }} Auto Get Waydroid Image 🚀
+on:
+#  schedule:
+#    - cron: '0 0 * * *'
+  workflow_dispatch:
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get
+        run: |
+          # 配置环境
+          echo 配置环境
+          sudo apt update
+          sudo apt install aria2 curl qemu-utils qemu-system gparted -y
+          echo 下载所需安装包
+          cd /tmp
+          aria2c -x 16 -s 16 https://jihulab.com/gfdgd-xi/waydroid-image/-/raw/main/houdini-install.tar.gz
+          tar -xvf houdini-install.tar.gz
+          #curl https://repo.waydro.id | sudo bash
+          #sudo apt install waydroid -y
+          #sudo waydroid init -s GAPPS -f
+          
+          url=https://sourceforge.net/projects/waydroid/files/images/system/lineage/waydroid_x86_64/lineage-18.1-20230422-GAPPS-waydroid_x86_64-system.zip/download
+          aria2c -x 16 -s 16 $url
+          u=`dirname $url`
+          unzip `basename $u`
+          # 扩容 img
+          qemu-img resize system.img +1G
+          sudo modprobe nbd max_ports=8 
+          sudo qemu-nbd system.img --connect=/dev/nbd0 | true
+          df -H /tmp
+          sudo resize2fs -p /dev/nbd0 
+          echo 挂载
+          sudo mkdir /tmp/mount -p
+          sudo mount /dev/nbd0 /tmp/mount
+          sudo mkdir -p /tmp/mount/bin | true
+          sudo mkdir -p /tmp/mount/etc | true
+          sudo mkdir -p /tmp/mount/etc/init | true
+          sudo mkdir -p /tmp/mount/lib | true
+          sudo mkdir -p /tmp/mount/lib64 | true
+          sudo cp /tmp/houdini-install/overlay/system/bin /tmp/mount/system -rv | true
+          sudo cp /tmp/houdini-install/overlay/system/etc /tmp/mount/system -rv | true
+          sudo cp /tmp/houdini-install/overlay/system/lib /tmp/mount/ -rv | true
+          sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
+          
+          sudo umount /tmp/mount | true
+          sudo qemu-nbd -d /dev/nbd0 | true
+          mkdir -p deb/DEBIAN
+          mkdir -p deb/usr/share/waydroid-extra
+          cp system.img deb/usr/share/waydroid-extra
+          cat > deb/DEBIAN/control <<EOF
+          Package: waydroid-android-image-gapps
+          Version: 1.0.0
+          Maintainer: gfdgd xi <3025613752@qq.com>
+          Homepage: https://github.com/gfdgd-xi/waydroid-runner
+          Architecture: amd64
+          Severity: serious
+          Certainty: possible
+          Check: binaries
+          Type: binary, udeb
+          Priority: optional
+          Depends: 
+          Section: utils
+          Installed-Size: 0
+          Description: Waydroid Android 镜像
+          EOF
+          dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
+          mv waydroid-android-image-gapps.deb /tmp
+          
+      - name: upload result(system.img)
+        uses: actions/upload-artifact@v1
+        with:
+          name: system.img
+          path: /tmp/system.img
+      
+      - name: upload result(waydroid-android-image-gapps.deb)
+        uses: actions/upload-artifact@v1
+        with:
+          name: waydroid-android-image-gapps.deb
+          path: /tmp/waydroid-android-image-gapps.deb
+      #- name: upload result(vendor.img)
+       # uses: actions/upload-artifact@v1
+       # with:
+        #  name: vendor.img
+         # path: /usr/share/waydroid-extra/images/vendor.img
+  
+
+      
+    
