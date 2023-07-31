@@ -83,6 +83,7 @@ jobs:
           #!/bin/bash
           systemctl restart waydroid-container.service | true
           EOF
+          chmod 0775 -Rv deb/DEBIAN
           dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
           #mv waydroid-android-image-gapps.deb /tmp
           
