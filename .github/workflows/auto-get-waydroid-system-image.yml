@@ -146,7 +146,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: vendor.img
-          path: /usr/share/waydroid-extra/images/vendor.img
+          path: /tmp/vendor.img
       - name: upload result(waydroid-android-image-gapps.deb)
         uses: actions/upload-artifact@v1
         with:
