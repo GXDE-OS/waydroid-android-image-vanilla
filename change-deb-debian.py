@@ -16,5 +16,5 @@ for i in control.splitlines():
         continue
     newControl += f"{i}\n"
 print(newControl)
-with open(sys.argv[2], "w") as file:
+with open(sys.argv[1], "w") as file:
     file.write(newControl)

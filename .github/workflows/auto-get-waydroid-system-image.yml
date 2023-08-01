@@ -98,8 +98,40 @@ jobs:
           dpkg -e waydroid_*.deb waydroid/DEBIAN
           mkdir -p /tmp/waydroid/var/lib/waydroid/
           tree waydroid
-          bash -c "echo -e '\npersist.sys.timezone=Asia/Shanghai\npersist.sys.language=zh\npersist.sys.country=CN' >> /tmp/waydroid/var/lib/waydroid/waydroid.cfg"
-          bash -c "echo -e '\nro.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.product.cpu.abilist64=x86_64,arm64-v8a\nro.dalvik.vm.native.bridge=libhoudini.so\nro.enable.native.bridge.exec=1\nro.dalvik.vm.isa.arm=x86\nro.dalvik.vm.isa.arm64=x86_64\nro.vendor.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist64=x86_64,arm64-v8a'  >> /tmp/waydroid/var/lib/waydroid/waydroid.cfg"
+          cat > /tmp/waydroid/var/lib/waydroid/waydroid.cfg <<EOF
+          [waydroid]
+          arch = x86_64
+          vendor_type = MAINLINE
+          system_datetime = 0
+          vendor_datetime = 0
+          suspend_action = freeze
+          mount_overlays = True
+          images_path = /usr/share/waydroid-extra/images
+          system_ota = https://ota.waydro.id/system/lineage/waydroid_x86_64/VANILLA.json
+          vendor_ota = https://ota.waydro.id/vendor/waydroid_x86_64/MAINLINE.json
+          binder = anbox-binder
+          vndbinder = anbox-vndbinder
+          hwbinder = anbox-hwbinder
+          binder_protocol = aidl3
+          service_manager_protocol = aidl3
+          persist.sys.timezone=Asia/Shanghai
+          persist.sys.language=zh
+          persist.sys.country=CN
+
+          [properties]
+          ro.product.cpu.abilist = x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
+          ro.product.cpu.abilist32 = x86,armeabi-v7a,armeabi
+          ro.product.cpu.abilist64 = x86_64,arm64-v8a
+          ro.dalvik.vm.native.bridge = libhoudini.so
+          ro.enable.native.bridge.exec = 1
+          ro.dalvik.vm.isa.arm = x86
+          ro.dalvik.vm.isa.arm64 = x86_64
+          ro.vendor.product.cpu.abilist = x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
+          ro.vendor.product.cpu.abilist32 = x86,armeabi-v7a,armeabi
+          ro.vendor.product.cpu.abilist64 = x86_64,arm64-v8a
+          EOF
+          #bash -c "echo -e '\npersist.sys.timezone=Asia/Shanghai\npersist.sys.language=zh\npersist.sys.country=CN' >> /tmp/waydroid/var/lib/waydroid/waydroid.cfg"
+          #bash -c "echo -e '\nro.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.product.cpu.abilist64=x86_64,arm64-v8a\nro.dalvik.vm.native.bridge=libhoudini.so\nro.enable.native.bridge.exec=1\nro.dalvik.vm.isa.arm=x86\nro.dalvik.vm.isa.arm64=x86_64\nro.vendor.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist64=x86_64,arm64-v8a'  >> /tmp/waydroid/var/lib/waydroid/waydroid.cfg"
           rm waydroid/DEBIAN/md5sums -rfv
           python3 waydroid-deb-build/change-deb-debian.py waydroid/DEBIAN/control
           dpkg-deb -Z xz -z 4 -b waydroid waydroid.deb
