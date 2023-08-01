@@ -58,8 +58,8 @@ jobs:
           #sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
           wget https://github.com/supremegamers/vendor_google_proprietary_widevine-prebuilt/archive/48d1076a570837be6cdce8252d5d143363e37cc1.zip
           unzip 48d1076a570837be6cdce8252d5d143363e37cc1.zip
-          cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/system -rv
-          cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv
+          sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/system -rv
+          sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv
           
           sudo umount /tmp/mount | true
           sudo qemu-nbd -d /dev/nbd0 | true
