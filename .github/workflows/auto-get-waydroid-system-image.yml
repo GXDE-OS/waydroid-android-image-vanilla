@@ -38,33 +38,23 @@ jobs:
           uVendor=`dirname $urlVendor`
           unzip `basename $uSystem`
           unzip `basename $uVendor`
-          # 扩容 img
-          qemu-img resize system.img +1G
-          sudo modprobe nbd max_ports=8 
-          sudo qemu-nbd system.img --connect=/dev/nbd0 | true
-          df -H /tmp
-          sudo resize2fs -p /dev/nbd0 
-          echo 挂载
-          sudo mkdir /tmp/mount -p
-          sudo mount /dev/nbd0 /tmp/mount
-          sudo mkdir -p /tmp/mount/bin | true
-          sudo mkdir -p /tmp/mount/etc | true
-          sudo mkdir -p /tmp/mount/etc/init | true
-          sudo mkdir -p /tmp/mount/lib | true
-          sudo mkdir -p /tmp/mount/lib64 | true
-          sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/system -rv | true
+          
           #sudo cp /tmp/houdini-install/overlay/system/etc /tmp/mount/system -rv | true
-          sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/ -rv | true
+          #sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/ -rv | true
           #sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
           wget https://github.com/supremegamers/vendor_google_proprietary_widevine-prebuilt/archive/48d1076a570837be6cdce8252d5d143363e37cc1.zip
           unzip 48d1076a570837be6cdce8252d5d143363e37cc1.zip
-          sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/system -rv | true
-          sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv | true
+          #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/system -rv | true
+          #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv | true
           
           sudo umount /tmp/mount | true
           sudo qemu-nbd -d /dev/nbd0 | true
           mkdir -p deb/DEBIAN
           mkdir -p deb/usr/share/waydroid-extra
+          mkdir -p deb/var/lib/waydroid/overlay/system
+          # 扩容 img
+          cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv 
+          cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* deb/var/lib/waydroid/overlay/system -rv | true
           cp system.img deb/usr/share/waydroid-extra
           cp vendor.img deb/usr/share/waydroid-extra
 
