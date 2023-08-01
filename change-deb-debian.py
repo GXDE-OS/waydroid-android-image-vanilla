@@ -12,7 +12,7 @@ for i in control.splitlines():
         newControl += f"{i}, gfdgd xi<3025613752@qq.com>\n"
         continue
     if i[:8].lower() == "depends:":
-        newControl += f"{i}, waydroid-android-image-gapps | waydroid-android-image-vanilla\n"
+        newControl += f"{i}, waydroid-android-image-gapps | waydroid-android-image-vanilla, iptables\n"
         continue
     newControl += f"{i}\n"
 print(newControl)
