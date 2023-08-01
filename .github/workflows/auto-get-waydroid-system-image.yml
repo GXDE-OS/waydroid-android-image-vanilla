@@ -47,14 +47,14 @@ jobs:
           #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/system -rv | true
           #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv | true
           
-          sudo umount /tmp/mount | true
-          sudo qemu-nbd -d /dev/nbd0 | true
+          #sudo umount /tmp/mount | true
+          #sudo qemu-nbd -d /dev/nbd0 | true
           mkdir -p deb/DEBIAN
           mkdir -p deb/usr/share/waydroid-extra
           mkdir -p deb/var/lib/waydroid/overlay/system
           # 扩容 img
           cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv 
-          cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* deb/var/lib/waydroid/overlay/system -rv | true
+          #cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* deb/var/lib/waydroid/overlay/system -rv | true
           cp system.img deb/usr/share/waydroid-extra
           cp vendor.img deb/usr/share/waydroid-extra
 
