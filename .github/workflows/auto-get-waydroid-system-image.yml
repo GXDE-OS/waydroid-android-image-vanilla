@@ -77,12 +77,24 @@ jobs:
           cat > deb/DEBIAN/postinst <<EOF
           #!/bin/bash
           systemctl restart waydroid-container.service | true
+          waydroid shell wm set-fix-to-user-rotation enabled | true
           EOF
           cat > deb/DEBIAN/postrm <<EOF
           #!/bin/bash
           systemctl restart waydroid-container.service | true
           EOF
           chmod 0775 -Rv deb/DEBIAN
+          mv deb/usr/bin/waydroid deb/usr/bin/waydroid-session
+          cat > deb/usr/bin/waydroid <<EOF
+          #!/bin/bash
+          if [[ ! -f $HOME/.config/waydroid/set-already ]]; then
+            waydroid prop set persist.waydroid.multi_windows true
+            waydroid-session prop set persist.waydroid.cursor_on_subsurface true 
+            mkdir -p $HOME/.config/waydroid/
+            touch $HOME/.config/waydroid/set-already
+          fi
+          waydroid-session "$@"
+          EOF
           dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
           #mv waydroid-android-image-gapps.deb /tmp
           apt download waydroid python3-gbinder libgbinder libglibutil
@@ -106,11 +118,11 @@ jobs:
           hwbinder = anbox-hwbinder
           binder_protocol = aidl3
           service_manager_protocol = aidl3
+
+          [properties]
           persist.sys.timezone=Asia/Shanghai
           persist.sys.language=zh
           persist.sys.country=CN
-
-          [properties]
           ro.product.cpu.abilist = x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
           ro.product.cpu.abilist32 = x86,armeabi-v7a,armeabi
           ro.product.cpu.abilist64 = x86_64,arm64-v8a
