@@ -85,12 +85,10 @@ jobs:
           Description: Waydroid Android 镜像
           EOF
           cat > deb/DEBIAN/postinst <<EOF
-          Package: waydroid-android-image-gapps
           #!/bin/bash
           systemctl restart waydroid-container.service | true
           EOF
           cat > deb/DEBIAN/postrm <<EOF
-          Package: waydroid-android-image-gapps
           #!/bin/bash
           systemctl restart waydroid-container.service | true
           EOF
