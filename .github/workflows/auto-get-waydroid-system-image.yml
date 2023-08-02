@@ -84,7 +84,6 @@ jobs:
           systemctl restart waydroid-container.service | true
           EOF
           chmod 0775 -Rv deb/DEBIAN
-          mv deb/usr/bin/waydroid deb/usr/bin/waydroid-session
           cat > deb/usr/bin/waydroid <<EOF
           #!/bin/bash
           if [[ ! -f $HOME/.config/waydroid/set-already ]]; then
@@ -102,6 +101,7 @@ jobs:
           dpkg -e waydroid_*.deb waydroid/DEBIAN
           mkdir -p /tmp/waydroid/var/lib/waydroid/
           tree waydroid
+          mv /tmp/waydroid/usr/bin/waydroid /tmp/waydroid/usr/bin/waydroid-session
           cat > /tmp/waydroid/var/lib/waydroid/waydroid.cfg <<EOF
           [waydroid]
           arch = x86_64
