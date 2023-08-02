@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get
+        env: 
+          PASSWORD: ${{ secrets.PASSWORD }}
+          USER: ${{ secrets.USER }}
         run: |
           # 配置环境
           echo 配置环境
@@ -77,7 +80,6 @@ jobs:
           cat > deb/DEBIAN/postinst <<EOF
           #!/bin/bash
           systemctl restart waydroid-container.service | true
-          waydroid shell wm set-fix-to-user-rotation enabled | true
           EOF
           cat > deb/DEBIAN/postrm <<EOF
           #!/bin/bash
@@ -92,18 +94,6 @@ jobs:
           dpkg -e waydroid_*.deb waydroid/DEBIAN
           mkdir -p /tmp/waydroid/var/lib/waydroid/
           tree waydroid
-          mv /tmp/waydroid/usr/bin/waydroid /tmp/waydroid/usr/bin/waydroid-session
-          cat > /tmp/waydroid/usr/bin/waydroid <<EOF
-          #!/bin/bash
-          if [[ ! -f $HOME/.config/waydroid/set-already ]]; then
-            waydroid prop set persist.waydroid.multi_windows true
-            waydroid-session prop set persist.waydroid.cursor_on_subsurface true 
-            mkdir -p $HOME/.config/waydroid/
-            touch $HOME/.config/waydroid/set-already
-          fi
-          waydroid-session "\$@"
-          EOF
-          chmod 777 /tmp/waydroid/usr/bin/waydroid -Rv
           cat > /tmp/waydroid/var/lib/waydroid/waydroid.cfg <<EOF
           [waydroid]
           arch = x86_64
@@ -141,7 +131,16 @@ jobs:
           rm waydroid/DEBIAN/md5sums -rfv
           python3 waydroid-deb-build/change-deb-debian.py waydroid/DEBIAN/control
           dpkg-deb -Z xz -z 4 -b waydroid waydroid.deb
+          mkdir upload-deb
+          cd upload-deb
+          cp ../*.deb .
+          git add .
+          git config --global user.name 'gfdgd-xi'
+          git config --global user.email 3025613752@qq.com
 
+          git commit -m "$VERSION"
+          git remote add origin https://$USER:$PASSWORD@jihulab.com/gfdgd-xi/waydroid-deb-diy
+          git push origin +master
           
       - name: upload result(system.img)
         uses: actions/upload-artifact@v1
@@ -163,6 +162,7 @@ jobs:
         with:
           name: waydroid.deb
           path: /tmp/waydroid.deb
+      
 
   
 
