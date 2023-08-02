@@ -101,7 +101,7 @@ jobs:
             mkdir -p $HOME/.config/waydroid/
             touch $HOME/.config/waydroid/set-already
           fi
-          waydroid-session "$@"
+          waydroid-session "\$@"
           EOF
           chmod 777 /tmp/waydroid/usr/bin/waydroid -Rv
           cat > /tmp/waydroid/var/lib/waydroid/waydroid.cfg <<EOF
