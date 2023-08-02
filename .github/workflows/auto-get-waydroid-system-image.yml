@@ -178,10 +178,7 @@ jobs:
           name: waydroid.deb
           path: |
             /tmp/waydroid.deb
-            /tmp/python3-gbinder.deb
-            /tmp/libgbinder.deb
-            /tmp/libglibutil.deb
-      
+            
 
   
 
