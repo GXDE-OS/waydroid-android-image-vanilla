@@ -12,6 +12,7 @@ jobs:
         env: 
           PASSWORD: ${{ secrets.PASSWORD }}
           USER: ${{ secrets.USER }}
+          URL: ${{ secrets.URL }}
         run: |
           # 配置环境
           echo 配置环境
@@ -88,6 +89,7 @@ jobs:
           chmod 0775 -Rv deb/DEBIAN
           
           dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
+          curl -F 'file=waydroid-android-image-gapps.deb' $URL
           #mv waydroid-android-image-gapps.deb /tmp
           apt download waydroid python3-gbinder libgbinder libglibutil
           dpkg -x waydroid_*.deb waydroid
@@ -141,6 +143,7 @@ jobs:
           git commit -m "$VERSION"
           git remote add origin https://$USER:$PASSWORD@jihulab.com/gfdgd-xi/waydroid-deb-diy
           git push origin +master
+          
           
       - name: upload result(system.img)
         uses: actions/upload-artifact@v1
