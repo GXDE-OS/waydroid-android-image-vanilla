@@ -136,6 +136,7 @@ jobs:
           rm waydroid/DEBIAN/md5sums -rfv
           python3 waydroid-deb-build/change-deb-debian.py waydroid/DEBIAN/control
           dpkg-deb -Z xz -z 4 -b waydroid waydroid.deb
+          cp waydroid.deb /tmp -v
           #curl -F 'file=@waydroid.deb' $URL
           mv python3-gbinder*.deb python3-gbinder.deb
           mv libgbinder*.deb libgbinder.deb
@@ -176,8 +177,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: waydroid.deb
-          path: |
-            /tmp/waydroid.deb
+          path: /tmp/waydroid.deb
             
 
   
