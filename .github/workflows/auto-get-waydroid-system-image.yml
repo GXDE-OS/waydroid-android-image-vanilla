@@ -151,8 +151,8 @@ jobs:
           git config --global user.name 'rain-gfd'
           git config --global user.email q3025613752@qq.com
           git commit -m $VERSION
-          git remote add origin https://rain-gfd:$PASSWORD@gitlink.org.cn/rain-gfd/waydroid-image.git
-          git push origin +master
+          git remote add origin "https://rain-gfd:$PASSWORD@gitlink.org.cn/rain-gfd/waydroid-image.git" | true
+          git push origin +master | true
           
           
           
