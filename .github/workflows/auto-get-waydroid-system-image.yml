@@ -84,7 +84,16 @@ jobs:
           systemctl restart waydroid-container.service | true
           EOF
           chmod 0775 -Rv deb/DEBIAN
-          cat > deb/usr/bin/waydroid <<EOF
+          
+          dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
+          #mv waydroid-android-image-gapps.deb /tmp
+          apt download waydroid python3-gbinder libgbinder libglibutil
+          dpkg -x waydroid_*.deb waydroid
+          dpkg -e waydroid_*.deb waydroid/DEBIAN
+          mkdir -p /tmp/waydroid/var/lib/waydroid/
+          tree waydroid
+          mv /tmp/waydroid/usr/bin/waydroid /tmp/waydroid/usr/bin/waydroid-session
+          cat > /tmp/waydroid/usr/bin/waydroid <<EOF
           #!/bin/bash
           if [[ ! -f $HOME/.config/waydroid/set-already ]]; then
             waydroid prop set persist.waydroid.multi_windows true
@@ -94,14 +103,7 @@ jobs:
           fi
           waydroid-session "$@"
           EOF
-          dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
-          #mv waydroid-android-image-gapps.deb /tmp
-          apt download waydroid python3-gbinder libgbinder libglibutil
-          dpkg -x waydroid_*.deb waydroid
-          dpkg -e waydroid_*.deb waydroid/DEBIAN
-          mkdir -p /tmp/waydroid/var/lib/waydroid/
-          tree waydroid
-          mv /tmp/waydroid/usr/bin/waydroid /tmp/waydroid/usr/bin/waydroid-session
+          chmod 777 /tmp/waydroid/usr/bin/waydroid -Rv
           cat > /tmp/waydroid/var/lib/waydroid/waydroid.cfg <<EOF
           [waydroid]
           arch = x86_64
