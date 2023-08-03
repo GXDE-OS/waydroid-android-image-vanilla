@@ -1,5 +1,5 @@
-name: Auto Get Waydroid Image
-run-name: ${{ github.actor }} Auto Get Waydroid Image 🚀
+name: Auto Get Waydroid Image（ARM64）
+run-name: ${{ github.actor }} Auto Get Waydroid Image（ARM64） 🚀
 on:
 #  schedule:
   push:

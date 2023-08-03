@@ -69,15 +69,15 @@ EOF
 chmod 0775 -Rv deb/DEBIAN
 cat > /tmp/deb/var/lib/waydroid/waydroid.cfg <<EOF
 [waydroid]
-arch = x86_64
+arch = arm64
 vendor_type = MAINLINE
 system_datetime = 0
 vendor_datetime = 0
 suspend_action = freeze
 mount_overlays = True
 images_path = /usr/share/waydroid-extra/images
-system_ota = https://ota.waydro.id/system/lineage/waydroid_x86_64/VANILLA.json
-vendor_ota = https://ota.waydro.id/vendor/waydroid_x86_64/MAINLINE.json
+system_ota = https://ota.waydro.id/system/lineage/waydroid_arm64/VANILLA.json
+vendor_ota = https://ota.waydro.id/vendor/waydroid_arm64/MAINLINE.json
 binder = anbox-binder
 vndbinder = anbox-vndbinder
 hwbinder = anbox-hwbinder
