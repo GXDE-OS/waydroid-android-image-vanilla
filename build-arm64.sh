@@ -10,7 +10,7 @@ python3 get-newest-version.py
 cp ../waydroid-deb-build /tmp -rv
 VERSION=`cat /tmp/version.txt`-`date +"%Y%m%d%H%M%S"`
 curl https://repo.waydro.id | sudo bash | true
-sudo bash -c "echo deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo.waydro.id/ bullseye main > /etc/apt/sources.list.d/waydroid.list"
+sudo bash -c "echo deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo.waydro.id/ jammy main > /etc/apt/sources.list.d/waydroid.list"
 sudo apt update | true
 echo 下载所需安装包
 cd /tmp
