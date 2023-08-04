@@ -6,7 +6,7 @@ sudo apt update | true
 sudo apt install tree aria2 curl git python3 python3-requests -y
 git clone https://github.com/gfdgd-xi/waydroid-deb-build
 cd waydroid-deb-build
-python3 get-newest-version.py
+python3 get-newest-version.py arm64 GAPPS
 cp ../waydroid-deb-build /tmp -rv
 VERSION=`cat /tmp/version.txt`-`date +"%Y%m%d%H%M%S"`
 curl https://repo.waydro.id | sudo bash | true
