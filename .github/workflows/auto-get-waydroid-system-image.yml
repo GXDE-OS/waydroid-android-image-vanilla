@@ -43,6 +43,22 @@ jobs:
         with:
           name: waydroid.deb
           path: /tmp/waydroid.deb
+      - name: upload result(python3-gbinder.deb)
+        uses: actions/upload-artifact@v1
+        with:
+          name: python3-gbinder.deb
+          path: /tmp/python3-gbinder.deb
+      - name: upload result(libgbinder.deb)
+        uses: actions/upload-artifact@v1
+        with:
+          name: libgbinder.deb
+          path: /tmp/libgbinder.deb
+      - name: upload result(libglibutil.deb)
+        uses: actions/upload-artifact@v1
+        with:
+          name: libglibutil.deb
+          path: /tmp/libglibutil.deb
+  
             
 
   
