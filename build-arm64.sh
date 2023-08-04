@@ -1,7 +1,8 @@
 #!/bin/bash
 # 配置环境
 echo 配置环境
-sudo apt update
+dpkg --add-architecture arm64
+sudo apt update | true
 sudo apt install tree aria2 curl git python3 python3-requests -y
 git clone https://github.com/gfdgd-xi/waydroid-deb-build
 cd waydroid-deb-build
@@ -10,7 +11,7 @@ cp ../waydroid-deb-build /tmp -rv
 VERSION=`cat /tmp/version.txt`-`date +"%Y%m%d%H%M%S"`
 curl https://repo.waydro.id | sudo bash | true
 sudo bash -c "echo deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo.waydro.id/ focal main > /etc/apt/sources.list.d/waydroid.list"
-sudo apt update
+sudo apt update | true
 echo 下载所需安装包
 cd /tmp
 #curl https://repo.waydro.id | sudo bash
@@ -92,7 +93,7 @@ EOF
 dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
 #curl -F 'file=@waydroid-android-image-gapps.deb' $URL
 #mv waydroid-android-image-gapps.deb /tmp
-apt download waydroid python3-gbinder libgbinder libglibutil
+apt download waydroid python3-gbinder:arm64 libgbinder:arm64 libglibutil:arm64
 #curl -F 'file=@libgbinder.deb' $URL
 #curl -F 'file=@libglibutil.deb' $URL
 #curl -F 'file=@python3-gbinder.deb' $URL
