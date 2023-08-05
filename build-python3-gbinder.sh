@@ -4,7 +4,7 @@ arch=$2
 systemPath=debian-$version
 chrootRun="sudo chroot $systemPath"
 sudo apt install debootstrap -y
-sudo debootstrap $version --arch=$arch $systemPath
+sudo debootstrap --arch=$arch $version  $systemPath
 sudo aria2c -d /usr/bin -o pardus-chroot https://github.com/gfdgd-xi/deep-wine-runner/raw/main/pardus-chroot
 sudo chmod 777 /usr/bin/pardus-chroot
 sudo pardus-chroot $systemPath
