@@ -1,7 +1,7 @@
 name: Auto Building Python3 GBinder
 run-name: ${{ github.actor }} Auto Building Python3 GBinder 🚀
 on:
-  push:
+  #push:
   workflow_dispatch:
 jobs:
   Explore-GitHub-Actions:
