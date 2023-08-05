@@ -11,7 +11,7 @@ jobs:
         run: |
           # 配置环境
           sudo apt update
-          sudo apt install git dpkg-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qt5-qmake -y
+          sudo apt install git -y
           git clone https://github.com/gfdgd-xi/waydroid-runner
           #cd waydroid-runner
           bash build-python3-gbinder.sh
