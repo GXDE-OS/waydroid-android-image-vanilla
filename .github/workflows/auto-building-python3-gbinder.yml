@@ -1,0 +1,22 @@
+name: Auto Building Python3 GBinder
+run-name: ${{ github.actor }} Auto Building Python3 GBinder 🚀
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Building DEB
+        run: |
+          # 配置环境
+          sudo apt update
+          sudo apt install git dpkg-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qt5-qmake -y
+          git clone https://github.com/gfdgd-xi/waydroid-runner
+          #cd waydroid-runner
+          bash build-python3-gbinder.sh
+          #make build
+          #mv spark-waydroid-runner.deb ~
+      
+      
+    
