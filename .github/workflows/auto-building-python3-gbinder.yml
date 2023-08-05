@@ -14,7 +14,7 @@ jobs:
           sudo apt install git -y
           git clone https://github.com/gfdgd-xi/waydroid-deb-build
           cd waydroid-deb-build
-          bash build-python3-gbinder.sh
+          bash build-python3-gbinder.sh buster amd64
           #make build
           #mv spark-waydroid-runner.deb ~
       
