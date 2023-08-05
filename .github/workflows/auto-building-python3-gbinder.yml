@@ -12,8 +12,8 @@ jobs:
           # 配置环境
           sudo apt update
           sudo apt install git -y
-          git clone https://github.com/gfdgd-xi/waydroid-runner
-          #cd waydroid-runner
+          git clone https://github.com/gfdgd-xi/waydroid-deb-build
+          cd waydroid-deb-build
           bash build-python3-gbinder.sh
           #make build
           #mv spark-waydroid-runner.deb ~
