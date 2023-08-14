@@ -31,16 +31,22 @@ unzip `basename $uVendor`
 #sudo cp /tmp/houdini-install/overlay/system/etc /tmp/mount/system -rv | true
 #sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/ -rv | true
 #sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
-wget https://github.com/supremegamers/vendor_google_proprietary_widevine-prebuilt/archive/48d1076a570837be6cdce8252d5d143363e37cc1.zip
-unzip 48d1076a570837be6cdce8252d5d143363e37cc1.zip
+#wget https://github.com/supremegamers/vendor_google_proprietary_widevine-prebuilt/archive/48d1076a570837be6cdce8252d5d143363e37cc1.zip
+#unzip 48d1076a570837be6cdce8252d5d143363e37cc1.zip
 #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/system -rv | true
 #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv | true
+wget https://jihulab.com/gfdgd-xi/waydroid-image/-/raw/main/Widevine-installer.tar
+tar -xvf Widevine-installer.tar
+mkdir Widevine-installer
+mount widevine-x64-11.img Widevine-installer
 
 #sudo umount /tmp/mount | true
 #sudo qemu-nbd -d /dev/nbd0 | true
 mkdir -p deb/DEBIAN
 mkdir -p deb/usr/share/waydroid-extra/images
 mkdir -p deb/var/lib/waydroid/overlay/system
+mkdir -p deb/var/lib/waydroid/overlay/vendor/
+cp Widevine-installer/* deb/var/lib/waydroid/overlay/vendor/ -rv
 # 扩容 img
 cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv 
 #cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* deb/var/lib/waydroid/overlay/system -rv | true
@@ -104,7 +110,8 @@ ro.vendor.product.cpu.abilist = x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
 ro.vendor.product.cpu.abilist32 = x86,armeabi-v7a,armeabi
 ro.vendor.product.cpu.abilist64 = x86_64,arm64-v8a
 EOF
-dpkg-deb -Z xz -z 4 -b deb waydroid-android-image-gapps.deb
+rm -rfv /tmp/deb/var/lib/waydroid/overlay/system/bin/resetproc
+dpkg-deb -Z xz -z 9 -b deb waydroid-android-image-gapps.deb
 #curl -F 'file=@waydroid-android-image-gapps.deb' $URL
 #mv waydroid-android-image-gapps.deb /tmp
 apt download waydroid python3-gbinder libgbinder libglibutil
@@ -120,7 +127,7 @@ tree waydroid
 #bash -c "echo -e '\nro.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.product.cpu.abilist64=x86_64,arm64-v8a\nro.dalvik.vm.native.bridge=libhoudini.so\nro.enable.native.bridge.exec=1\nro.dalvik.vm.isa.arm=x86\nro.dalvik.vm.isa.arm64=x86_64\nro.vendor.product.cpu.abilist=x86_64,x86,arm64-v8a,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist32=x86,armeabi-v7a,armeabi\nro.vendor.product.cpu.abilist64=x86_64,arm64-v8a'  >> /tmp/waydroid/var/lib/waydroid/waydroid.cfg"
 rm waydroid/DEBIAN/md5sums -rfv
 python3 waydroid-deb-build/change-deb-debian.py waydroid/DEBIAN/control
-dpkg-deb -Z xz -z 4 -b waydroid waydroid.deb
+dpkg-deb -Z xz -z 9 -b waydroid waydroid.deb
 #cp waydroid.deb /tmp -v
 #curl -F 'file=@waydroid.deb' $URL
 mv python3-gbinder*.deb python3-gbinder.deb
