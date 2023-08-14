@@ -110,7 +110,7 @@ ro.vendor.product.cpu.abilist = x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
 ro.vendor.product.cpu.abilist32 = x86,armeabi-v7a,armeabi
 ro.vendor.product.cpu.abilist64 = x86_64,arm64-v8a
 EOF
-rm -rfv /tmp/deb/var/lib/waydroid/overlay/system/bin/resetproc
+rm -rfv /tmp/deb/var/lib/waydroid/overlay/system/bin/resetprop
 dpkg-deb -Z xz -z 9 -b deb waydroid-android-image-gapps.deb
 #curl -F 'file=@waydroid-android-image-gapps.deb' $URL
 #mv waydroid-android-image-gapps.deb /tmp
