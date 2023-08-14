@@ -52,7 +52,7 @@ cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv
 #cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* deb/var/lib/waydroid/overlay/system -rv | true
 cp system.img deb/usr/share/waydroid-extra/images
 cp vendor.img deb/usr/share/waydroid-extra/images
-size=(`du ~/Desktop/deep-wine-runner | tail -n 1`)
+size=(`du deb | tail -n 1`)
 cat > deb/DEBIAN/control <<EOF
 Package: waydroid-android-image-gapps
 Version: $VERSION
