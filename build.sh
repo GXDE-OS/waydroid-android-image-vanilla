@@ -40,17 +40,25 @@ tar -xvf Widevine-installer.tar
 mkdir Widevine-installer
 mount widevine-x64-11.img Widevine-installer
 aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/Via.tar
+aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/com.google.android.inputmethod.pinyin.tar
+aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/nextapp.fx.tar
 #sudo umount /tmp/mount | true
 #sudo qemu-nbd -d /dev/nbd0 | true
 mkdir -p deb/DEBIAN
 mkdir -p deb/usr/share/waydroid-extra/images
 mkdir -p deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/Via
+mkdir -p deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/com.google.android.inputmethod.pinyin
+mkdir -p deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/nextapp.fx
 mkdir -p deb/var/lib/waydroid/overlay/vendor/
 cp Widevine-installer/* deb/var/lib/waydroid/overlay/vendor/ -rv
 # 扩容 img
 cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv 
 cd deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/Via
 tar -xvf /tmp/Via.tar
+cd ../com.google.android.inputmethod.pinyin
+tar -xvf /tmp/com.google.android.inputmethod.pinyin.tar
+cd ../nextapp.fx
+tar -xvf /tmp/nextapp.fx.tar
 cd /tmp
 #cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* deb/var/lib/waydroid/overlay/system -rv | true
 cp system.img deb/usr/share/waydroid-extra/images
