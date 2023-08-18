@@ -1,5 +1,6 @@
 #!/bin/bash
 # 配置环境
+modprobe loop | true
 echo 配置环境
 sudo apt update
 sudo apt install tree aria2 curl qemu-utils gparted git python3 python3-requests -y
