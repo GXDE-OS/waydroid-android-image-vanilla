@@ -53,7 +53,7 @@ mkdir -p deb/var/lib/waydroid/overlay/vendor/
 cp Widevine-installer/* deb/var/lib/waydroid/overlay/vendor/ -rv
 # 扩容 img
 cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv 
-cd deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/Via
+cd deb/var/lib/waydroid/overlay/system/priv-app/Via
 tar -xvf /tmp/Via.tar
 cd ../com.google.android.inputmethod.pinyin
 tar -xvf /tmp/com.google.android.inputmethod.pinyin.tar
@@ -83,6 +83,7 @@ EOF
 cat > deb/DEBIAN/postinst <<EOF
 #!/bin/bash
 systemctl restart waydroid-container.service | true
+waydroid init -f | true
 EOF
 cat > deb/DEBIAN/postrm <<EOF
 #!/bin/bash
@@ -147,13 +148,13 @@ mv libglibutil*.deb libglibutil.deb
 #git clone https://gitlink.org.cn/rain-gfd/waydroid-image.git
 mkdir waydroid-image
 cd waydroid-image
-git init .
-cp ../system.img . -v
-cp ../vendor.img . -v
-git add .
+#git init .
+#cp ../system.img . -v
+#cp ../vendor.img . -v
+#git add .
 
-git config --global user.name 'rain-gfd'
-git config --global user.email q3025613752@qq.com
-git commit -m $VERSION
-git remote add origin "https://rain-gfd:$PASSWORD@gitlink.org.cn/rain-gfd/waydroid-image.git" | true
-git push origin +master | true
+#git config --global user.name 'rain-gfd'
+#git config --global user.email q3025613752@qq.com
+#git commit -m $VERSION
+#git remote add origin "https://rain-gfd:$PASSWORD@gitlink.org.cn/rain-gfd/waydroid-image.git" | true
+#git push origin +master | true
