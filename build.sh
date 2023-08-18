@@ -46,9 +46,9 @@ aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/downl
 #sudo qemu-nbd -d /dev/nbd0 | true
 mkdir -p deb/DEBIAN
 mkdir -p deb/usr/share/waydroid-extra/images
-mkdir -p deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/Via
-mkdir -p deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/com.google.android.inputmethod.pinyin
-mkdir -p deb/var/lib/waydroid/overlay/system/var/lib/waydroid/overlay/system/priv-app/nextapp.fx
+mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/Via
+mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/com.google.android.inputmethod.pinyin
+mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/nextapp.fx
 mkdir -p deb/var/lib/waydroid/overlay/vendor/
 cp Widevine-installer/* deb/var/lib/waydroid/overlay/vendor/ -rv
 # 扩容 img
