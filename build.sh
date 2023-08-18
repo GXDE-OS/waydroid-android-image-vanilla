@@ -37,8 +37,8 @@ unzip `basename $uVendor`
 #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv | true
 wget https://jihulab.com/gfdgd-xi/waydroid-image/-/raw/main/Widevine-installer.tar
 tar -xvf Widevine-installer.tar
-mkdir Widevine-installer
-mount widevine-x64-11.img Widevine-installer
+mkdir /tmp/waydroid-runner-widevinemount
+mount widevine-x64-11.img /tmp/waydroid-runner-widevinemount
 aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/Via.tar
 aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/com.google.android.inputmethod.pinyin.tar
 aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/nextapp.fx.tar
@@ -50,7 +50,7 @@ mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/Via
 mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/com.google.android.inputmethod.pinyin
 mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/nextapp.fx
 mkdir -p deb/var/lib/waydroid/overlay/vendor/
-cp Widevine-installer/* deb/var/lib/waydroid/overlay/vendor/ -rv
+cp /tmp/waydroid-runner-widevinemount/* deb/var/lib/waydroid/overlay/vendor/ -rv
 # 扩容 img
 cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv 
 cd deb/var/lib/waydroid/overlay/system/priv-app/Via
