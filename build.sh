@@ -2,7 +2,7 @@
 # 配置环境
 echo 配置环境
 sudo apt update
-sudo apt install tree aria2 curl git python3 python3-requests -y
+sudo apt install tree aria2 curl qemu-utils gparted git python3 python3-requests -y
 git clone https://github.com/gfdgd-xi/waydroid-deb-build
 cd waydroid-deb-build
 python3 get-newest-version.py
