@@ -1,8 +1,8 @@
 name: Auto Push Waydroid Runner
 run-name: ${{ github.actor }} Auto Push Waydroid Runner 🚀
 on:
-  schedule:
-    - cron: '0 * * * *'
+#  schedule:
+#    - cron: '0 * * * *'
   workflow_dispatch:
 jobs:
   Explore-GitHub-Actions:
