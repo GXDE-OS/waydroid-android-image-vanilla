@@ -18,6 +18,6 @@ jobs:
           sudo apt install git -y
           git clone https://gitee.com/gfdgd-xi/waydroid-runner/
           cd waydroid-runner
-          git remote set-url origin "https://gfdgd-xi:$PASSWORD@github.com/gfdgd-xi/waydroid-runner.git"
+          git remote set-url origin "https://gfdgd-xi:$KEYPASSWORD@github.com/gfdgd-xi/waydroid-runner.git"
           git push
           
