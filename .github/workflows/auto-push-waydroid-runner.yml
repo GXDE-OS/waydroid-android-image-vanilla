@@ -14,6 +14,8 @@ jobs:
           KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
           KEY: ${{ secrets.KEY }}
         run: |
+          sudo apt update
+          sudo apt install git -y
           git clone https://gitee.com/gfdgd-xi/waydroid-runner/
           cd waydroid-runner
           cat > .git/config <<EOF
