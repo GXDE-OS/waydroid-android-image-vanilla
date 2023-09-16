@@ -14,8 +14,6 @@ sudo bash -c "echo deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo
 sudo apt update
 echo 下载所需安装包
 cd /tmp
-aria2c -x 16 -s 16 https://jihulab.com/gfdgd-xi/waydroid-image/-/raw/main/houdini-install.tar.gz
-tar -xvf houdini-install.tar.gz
 #curl https://repo.waydro.id | sudo bash
 #sudo apt install waydroid -y
 #sudo waydroid init -s GAPPS -f
@@ -28,7 +26,9 @@ uSystem=`dirname $urlSystem`
 uVendor=`dirname $urlVendor`
 unzip `basename $uSystem`
 unzip `basename $uVendor`
-
+aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/waydroid-android-image-gapps-deb-template.deb
+dpkg -x waydroid-android-image-gapps-deb-template.deb deb
+dpkg -e waydroid-android-image-gapps-deb-template.deb deb、DEBIAN
 #sudo cp /tmp/houdini-install/overlay/system/etc /tmp/mount/system -rv | true
 #sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/ -rv | true
 #sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
@@ -36,31 +36,7 @@ unzip `basename $uVendor`
 #unzip 48d1076a570837be6cdce8252d5d143363e37cc1.zip
 #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/system -rv | true
 #sudo cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* /tmp/mount/ -rv | true
-wget https://jihulab.com/gfdgd-xi/waydroid-image/-/raw/main/Widevine-installer.tar
-tar -xvf Widevine-installer.tar
-mkdir /tmp/waydroid-runner-widevinemount
-mount widevine-x64-11.img /tmp/waydroid-runner-widevinemount
-aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/Via.tar
-aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/com.google.android.inputmethod.pinyin.tar
-aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/nextapp.fx.tar
-#sudo umount /tmp/mount | true
-#sudo qemu-nbd -d /dev/nbd0 | true
-mkdir -p deb/DEBIAN
-mkdir -p deb/usr/share/waydroid-extra/images
-mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/Via
-mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/com.google.android.inputmethod.pinyin
-mkdir -p deb/var/lib/waydroid/overlay/system/priv-app/nextapp.fx
-mkdir -p deb/var/lib/waydroid/overlay/vendor/
-cp /tmp/waydroid-runner-widevinemount/* deb/var/lib/waydroid/overlay/vendor/ -rv
-# 扩容 img
-cp /tmp/houdini-install/overlay/system/* deb/var/lib/waydroid/overlay/system -rv 
-cd deb/var/lib/waydroid/overlay/system/priv-app/Via
-tar -xvf /tmp/Via.tar
-cd ../com.google.android.inputmethod.pinyin
-tar -xvf /tmp/com.google.android.inputmethod.pinyin.tar
-cd ../nextapp.fx
-tar -xvf /tmp/nextapp.fx.tar
-cd /tmp
+
 #cp vendor_google_proprietary_widevine-prebuilt-*/prebuilts/* deb/var/lib/waydroid/overlay/system -rv | true
 cp system.img deb/usr/share/waydroid-extra/images
 cp vendor.img deb/usr/share/waydroid-extra/images
@@ -79,51 +55,9 @@ Priority: optional
 Depends: 
 Section: utils
 Installed-Size: $size
-Description: Waydroid Android 镜像
+Description: Waydroid Android 镜像（日更）
 EOF
-cat > deb/DEBIAN/postinst <<EOF
-#!/bin/bash
-systemctl restart waydroid-container.service | true
-waydroid init -f | true
-EOF
-cat > deb/DEBIAN/postrm <<EOF
-#!/bin/bash
-systemctl restart waydroid-container.service | true
-EOF
-chmod 0775 -Rv deb/DEBIAN
-cat > /tmp/deb/var/lib/waydroid/waydroid.cfg <<EOF
-[waydroid]
-arch = x86_64
-vendor_type = MAINLINE
-system_datetime = 0
-vendor_datetime = 0
-suspend_action = freeze
-mount_overlays = True
-images_path = /usr/share/waydroid-extra/images
-system_ota = https://ota.waydro.id/system/lineage/waydroid_x86_64/VANILLA.json
-vendor_ota = https://ota.waydro.id/vendor/waydroid_x86_64/MAINLINE.json
-binder = anbox-binder
-vndbinder = anbox-vndbinder
-hwbinder = anbox-hwbinder
-binder_protocol = aidl3
-service_manager_protocol = aidl3
 
-[properties]
-persist.sys.timezone=Asia/Shanghai
-persist.sys.language=zh
-persist.sys.country=CN
-ro.product.cpu.abilist = x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
-ro.product.cpu.abilist32 = x86,armeabi-v7a,armeabi
-ro.product.cpu.abilist64 = x86_64,arm64-v8a
-ro.dalvik.vm.native.bridge = libhoudini.so
-ro.enable.native.bridge.exec = 1
-ro.dalvik.vm.isa.arm = x86
-ro.dalvik.vm.isa.arm64 = x86_64
-ro.vendor.product.cpu.abilist = x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
-ro.vendor.product.cpu.abilist32 = x86,armeabi-v7a,armeabi
-ro.vendor.product.cpu.abilist64 = x86_64,arm64-v8a
-EOF
-rm -rfv /tmp/deb/var/lib/waydroid/overlay/system/bin/resetprop
 dpkg-deb -Z xz -z 9 -b deb waydroid-android-image-gapps.deb
 #curl -F 'file=@waydroid-android-image-gapps.deb' $URL
 #mv waydroid-android-image-gapps.deb /tmp
