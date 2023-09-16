@@ -58,7 +58,7 @@ Installed-Size: $size
 Description: Waydroid Android 镜像（日更）
 EOF
 
-dpkg-deb -Z xz -z 9 -b deb waydroid-android-image-gapps.deb
+dpkg-deb -Z xz -z 1 -b deb waydroid-android-image-gapps.deb
 #curl -F 'file=@waydroid-android-image-gapps.deb' $URL
 #mv waydroid-android-image-gapps.deb /tmp
 apt download waydroid python3-gbinder libgbinder libglibutil
