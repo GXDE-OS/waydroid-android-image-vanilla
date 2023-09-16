@@ -28,7 +28,7 @@ unzip `basename $uSystem`
 unzip `basename $uVendor`
 aria2c -x 16 -s 16 https://github.com/gfdgd-xi/waydroid-deb-build/releases/download/resources/waydroid-android-image-gapps-deb-template.deb
 dpkg -x waydroid-android-image-gapps-deb-template.deb deb
-dpkg -e waydroid-android-image-gapps-deb-template.deb deb、DEBIAN
+dpkg -e waydroid-android-image-gapps-deb-template.deb deb/DEBIAN
 #sudo cp /tmp/houdini-install/overlay/system/etc /tmp/mount/system -rv | true
 #sudo cp /tmp/houdini-install/overlay/system/* /tmp/mount/ -rv | true
 #sudo cp /tmp/houdini-install/overlay/system/lib64 /tmp/mount/ -rv | true
