@@ -2,6 +2,8 @@ name: Auto Get Waydroid Image
 run-name: ${{ github.actor }} Auto Get Waydroid Image 🚀
 on:
 #  schedule:
+  schedule:
+    - cron: '0 0 * * *'
   push:
   workflow_dispatch:
 jobs:
@@ -38,26 +40,26 @@ jobs:
         with:
           name: waydroid-android-image-gapps.deb
           path: /tmp/waydroid-android-image-gapps.deb
-      - name: upload result(waydroid.deb)
-        uses: actions/upload-artifact@v1
-        with:
-          name: waydroid.deb
-          path: /tmp/waydroid.deb
-      - name: upload result(python3-gbinder.deb)
-        uses: actions/upload-artifact@v1
-        with:
-          name: python3-gbinder.deb
-          path: /tmp/python3-gbinder.deb
-      - name: upload result(libgbinder.deb)
-        uses: actions/upload-artifact@v1
-        with:
-          name: libgbinder.deb
-          path: /tmp/libgbinder.deb
-      - name: upload result(libglibutil.deb)
-        uses: actions/upload-artifact@v1
-        with:
-          name: libglibutil.deb
-          path: /tmp/libglibutil.deb
+      #- name: upload result(waydroid.deb)
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: waydroid.deb
+      #    path: /tmp/waydroid.deb
+      #- name: upload result(python3-gbinder.deb)
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: python3-gbinder.deb
+      #    path: /tmp/python3-gbinder.deb
+      #- name: upload result(libgbinder.deb)
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: libgbinder.deb
+      #    path: /tmp/libgbinder.deb
+      #- name: upload result(libglibutil.deb)
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: libglibutil.deb
+      #    path: /tmp/libglibutil.deb
   
             
 
