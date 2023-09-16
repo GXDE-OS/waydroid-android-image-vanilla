@@ -43,7 +43,7 @@ cp vendor.img deb/usr/share/waydroid-extra/images
 size=(`du deb | tail -n 1`)
 cat > deb/DEBIAN/control <<EOF
 Package: waydroid-android-image-gapps
-Version: $VERSION
+Version: $VERSION~daily
 Maintainer: gfdgd xi <3025613752@qq.com>
 Homepage: https://github.com/gfdgd-xi/waydroid-runner
 Architecture: amd64
