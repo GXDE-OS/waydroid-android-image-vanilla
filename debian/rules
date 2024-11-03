@@ -18,12 +18,15 @@
 %:
 	dh $@
 
+# 忽略以下参数以正确构建 deb 包
 override_dh_strip:
 	true
 
 override_dh_shlibdeps:
 	true
 
+override_dh_dwz:
+	true
 
 # dh_make generated override targets.
 # This is an example for Cmake (see <https://bugs.debian.org/641051>).
